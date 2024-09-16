@@ -1,0 +1,111 @@
+#include <stdio.h> #include <stdlib.h> #include <unistd.h> #include <sys/wait.h> int main() {
+pid_t pid;
+// Fork a child process pid = fork();
+if (pid < 0) {
+// Fork failed
+fprintf(stderr, "Fork failed\n"); return 1;
+}
+else if (pid == 0) {
+// Child process
+printf("Child process: My PID is %d\n", getpid()); sleep(20);
+printf(“Executing the child process ….\n”);
+execlp("/bin/ls", "ls", NULL); // Example: executing 'ls' command
+// execlp failed only if the specified command doesn't exist
+ 
+perror("execlp"); exit(1);
+}
+else {
+// Parent process
+printf("Parent process: My PID is %d\n", getpid()); printf("child process sleeping for 20 seconds.	\n");
+// Wait for the child to finish wait(NULL);
+printf("Parent process: Child process has terminated\n");
+}
+return 0;
+}
+
+TERMWORK 9(current)
+echo "Enter the current working directory name"
+read dir
+ls -l > f2.txt
+grep ‘^d’ f2.txt > g1.txt
+echo "The Number of Directories in the Current Working Directory is"
+wo -1 gl.txt
+grep ‘^-‘ f2.txt > g1.txt
+echo "The number of files in the current working directory is"
+wc -1 gl.txt
+echo "Enter The Name of the file"
+read file
+ls -l Sfile
+chmod u+x, g+w $file
+echo " The file after changing the permission is"
+ls -l
+TERMWORK 10(present)
+# terminal
+mkdir oslab 
+cd oslab 
+mkdir dir1 
+mkdir dir2 
+vi f1.txt 
+vi f2.txt 
+vi f3.txt 
+cd .. 
+vi tw09.sh 
+# shell
+echo "the present directory is :" 
+pwd 
+echo "Enter the directory that you want as current working directory" 
+read dir 
+cd $dir 
+echo " The directory oslab created " 
+echo " Enter the directory you want to delete " 
+read r 
+rmdir $r 
+echo "Enter the file names " 
+read s2 
+read s2 
+cp $s1 $s2 
+mv $s1 $s2 dir2 
+ls -l dir3 
+echo "The files created" 
+echo "enter the file you want to delete " 
+read f 
+rm $f 
+echo " The file is deleted" 
+cd .. 
+echo "Moving to root " 
+
+# terminal
+chmod u+x tw09.sh
+./tw09.sh
+OPEN ENDED
+#!/bin/bash
+# Function to compute GCD of two numbers
+gcd() {
+    x=$1
+    y=$2
+    while [ $y -ne 0 ]; do
+        temp=$y
+        y=$(( $x % $y ))
+        x=$temp
+    done
+    echo $x
+}
+# Function to compute LCM of two numbers using GCD
+lcm() {
+    x=$1
+    y=$2
+    gcd_value=$(gcd $x $y)
+    lcm_value=$(( ($x * $y) / $gcd_value ))
+    echo $lcm_value
+}
+# Read input from user
+echo "Enter two numbers:"
+read num1
+read num2
+# Calculate GCD and LCM
+gcd_result=$(gcd $num1 $num2)
+lcm_result=$(lcm $num1 $num2)
+# Output results
+echo "GCD of $num1 and $num2 is: $gcd_result"
+echo "LCM of $num1 and $num2 is: $lcm_result"
+
