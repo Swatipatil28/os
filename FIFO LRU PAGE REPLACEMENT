@@ -1,0 +1,65 @@
+#include<stdio.h>
+int refstr[]={1,2,3,4,5,6,7,8,9};
+int len=sizeof(refstr)/sizeof(int);
+void printframe(int frames[],int n){
+    for(int i=0;i<n;i++){
+        printf("%d\t",frames[i]);
+    }}
+void fifo(int frames[],int numframes){
+    int pagefault=0,j=0,present=0;
+    for(int i=0;i<len;i++){
+        printf("\n\t\t%d\t\t",refstr[i]);
+    present=0;
+    for(int k=0;k<numframes;k++){
+        if(frames[k]==refstr[i]){
+            present=1;
+            break;
+        } }
+    if(!present){
+        frames[j]=refstr[i];
+        j=(j+1)%numframes;
+        pagefault++;
+        printframe(frames,numframes);
+    }}
+printf("\n The no of pagefaults is :%d",pagefault);
+}
+void lru(int frames[],int numframes){
+    int pagefault=0,lrucounter[numframes],lruindex,present;
+    for(int i=0;i<numframes;i++){
+        lrucounter[i]=-1;
+    }
+    for(int i=0;i<len;i++){
+        printf("\n\t\t%d\t\t",refstr[i]);
+    present=0;
+    for(int k=0;k<numframes;k++){
+        if(frames[k]==refstr[i]){
+            present=1;
+            lrucounter[k]=0;
+        }else if(lrucounter[k]!=-1){
+            lrucounter[k]++;
+        }  }
+    if(!present){
+        lruindex=0;
+        for(int k=1;k<numframes;k++){
+        if(lrucounter[k]>lrucounter[lruindex]){
+              lruindex=k;
+        }
+        frames[lruindex]=refstr[i];
+        lrucounter[lruindex]=0;
+        pagefault++;
+        printframe(frames,numframes);
+    } }}
+printf("\n The no of pagefaults is :%d",pagefault);
+}
+int main(){
+    printf("\n The reference string is:");
+    for(int i=0;i<len;i++){
+        printf("\n \t\t %d \t\t",refstr[i]);
+    }
+    int frames[5]={-1,-1,-1,-1,-1};
+    printf("\n the number of frames is using fifo:");
+    fifo(frames,2);
+    printf("\n the number of frames is using lru:");
+    lru(frames,2);
+    return 0;
+}
