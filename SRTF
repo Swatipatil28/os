@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+ int p[20],at[20],bt[20],ct[20],wt[20],tat[20],rt[20];
+ int n,currenttime=0,index,count=0;
+ float wtavg,tatavg;
+printf("Enter the number of process: ");
+ scanf("%d",&n);
+ for(int i=0;i<n;i++)
+ {
+ p[i]=i;
+ printf("Enter arrival and brust time of process %d: ",i);
+ scanf("%d %d",&at[i],&bt[i]);
+ rt[i]=bt[i];
+ }
+ rt[19]=9999;
+ while(count!=n)
+ {
+ index=19;
+ for(int i=0;i<n;i++)
+ {
+ if(at[i]<=currenttime && rt[i]>0 && rt[i]<rt[index]) index=i;
+ }
+rt[index]--;
+ currenttime++;
+if(rt[index]==0)
+ {
+ count++;
+ ct[index]=currenttime;
+ tat[index]=ct[index]-at[index];
+ wt[index]=tat[index]-bt[index];
+ wtavg+=wt[index];
+ tatavg+=tat[index];
+ }
+ }printf("\n\nP\tAT\tBT\tCT\tTAT\tWT\n");
+ for(int i=0;i<n;i++)
+ {
+ printf("P%d\t%d\t%d\t%d\t%d\t%d\n",p[i],at[i],bt[i],ct[i],tat[i],wt[i]);
+ }
+ printf("\n\nAverage Waiting Time: %0.2f\nAverage Turn Around Time:%0.2f",wtavg/n,tatavg/n);
+}
