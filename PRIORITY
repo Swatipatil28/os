@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+ int p[20],at[20],bt[20],ct[20],tat[20],wt[20],pr[20],rt[20];
+ int count=0,n,index,currentime=0;
+ float wtavg=0,tatavg=0;
+printf("Enter the number of processes: ");
+ scanf("%d",&n);
+ for(int i=0;i<n;i++)
+ {
+ p[i]=i;
+ printf("Enter arrival and brust time and priority of process %d: ",i);
+ scanf("%d %d %d",&at[i],&bt[i],&pr[i]);
+ rt[i]=bt[i];
+ }
+ while(count !=n)
+ {
+ index=-1;
+ for(int i=0;i<n;i++)
+ {
+ if(at[i]<=currentime && rt[i]>0)
+ {
+ if(index==-1 || pr[i]<pr[index]) index=i;
+ } }
+ if(index!=-1)
+ {
+ rt[index]--;
+ currentime++;
+ if(rt[index]==0)
+ {
+ count++;
+ ct[index]=currentime;
+ tat[index]=ct[index]-at[index];
+ wt[index]=tat[index]-bt[index];wtavg+=wt[index];
+ tatavg+=tat[index];
+ }
+ }
+ else currentime++;
+ }
+ printf("\n\nP\tAT\tBT\tPR\tCT\tTAT\tWT\n");
+ for(int i=0;i<n;i++)
+ {
+ printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",p[i],at[i],bt[i],pr[i],ct[i],tat[i],wt[i]);
+ }
+ printf("\n\nAverage WaiƟng Time: %0.2f\nAverage Turn Around Time:%0.2f",wtavg/n,tatavg/n);
+}
